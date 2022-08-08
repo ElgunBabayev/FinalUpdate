@@ -1,0 +1,59 @@
+﻿@model List<Product>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>ProductName</th>
+                        <th>Category</th>
+                        <th>Min.Price</th>
+                        <th>SessionTime</th>
+                        <th>Status</th>
+                        <th>Settings</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Product item in Model)
+                    {
+                    <tr>
+                        <td>@item.AppUser</td>
+                        <td>@item.Name</td>
+                        <td>@item.Category.Name</td>
+                        <td>@item.Prise</td>
+                        <td>@item.EndDate</td>
+                        @if (item.StatusId == 1)
+                        {
+                            <td class="text-warning">Pending</td>
+                        }
+                        else if (item.StatusId == 2)
+                        {
+                            <td class="text-success">Approved</td>
+                        }
+                        else if (item.StatusId == 3)
+                        {
+                            <td class="text-danger">Rejected</td>
+                        }
+                    <td>
+                            <a asp-action="ChangeStatusConfirmed" asp-route-id="@item.Id" class="btn btn-success">Approve</a>
+                            <a asp-action="ChangeStatusDisabled" asp-route-id="@item.Id" class="btn btn-danger">Reject</a> 
+                    </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/admin/js/demo/datatables-demo.js"></script>
+}
+
